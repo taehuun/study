@@ -4,13 +4,14 @@ import java.util.*;
 import java.io.*;
 
 public class Main_17406_김태훈 {
-	static int[] dy = { 1, 0, -1, 0 };
-	static int[] dx = { 0, 1, 0, -1 };
+	static int[] dy = { 0, 1, 0, -1 };
+	static int[] dx = { 1, 0, -1, 0 };
 	static int n, m, k; // 배열 크기 n,m 연산 횟수 k
 	static int[][] map; // 배열
 	static int[] orderR, orderC, orderS; // 연산 순서
 	static int r, c, s;
 	static int[][] orderRCS;
+	static int count = 0;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -19,9 +20,9 @@ public class Main_17406_김태훈 {
 		m = Integer.parseInt(st.nextToken());
 		k = Integer.parseInt(st.nextToken());
 		map = new int[n][m];
-//		orderR = new int[k];
-//		orderC = new int[k];
-//		orderS = new int[k];
+		orderR = new int[k];
+		orderC = new int[k];
+		orderS = new int[k];
 		orderRCS = new int[k][3];
 		
 		for (int i = 0; i < n; i++) {
@@ -33,12 +34,12 @@ public class Main_17406_김태훈 {
 		// ============여기까지가 기본 맵 입력받는곳===========
 		for (int i = 0; i < k; i++) {
 			st = new StringTokenizer(br.readLine());
-//			orderR[i] = Integer.parseInt(st.nextToken());
-//			orderC[i] = Integer.parseInt(st.nextToken());
-//			orderS[i] = Integer.parseInt(st.nextToken());
-			orderRCS[i][0] = Integer.parseInt(st.nextToken());
-			orderRCS[i][1] = Integer.parseInt(st.nextToken());
-			orderRCS[i][2] = Integer.parseInt(st.nextToken());
+			orderR[i] = Integer.parseInt(st.nextToken());
+			orderC[i] = Integer.parseInt(st.nextToken());
+			orderS[i] = Integer.parseInt(st.nextToken());
+//			orderRCS[i][0] = Integer.parseInt(st.nextToken());
+//			orderRCS[i][1] = Integer.parseInt(st.nextToken());
+//			orderRCS[i][2] = Integer.parseInt(st.nextToken());
 		}
 		// ============연산 입력받고 연산 메소드 호출===========================
 				// 입력 받은 R C S 배열들 회전 연산 사용 순서를 파악 하기 위한 순열 구현해야됨
@@ -67,19 +68,10 @@ public class Main_17406_김태훈 {
 			
 			//회전 연산하기
 			for (int i = 0; i < k; i++) {
-				int r = orderRCS[order[i]][0];
-				int c = orderRCS[order[i]][1];
-				int s = orderRCS[order[i]][2];
+				int r = orderR[order[i]];
+				int c = orderC[order[i]];
+				int s = orderS[order[i]];
 				roate(r, c, s, tempMap);
-				//출력확인을위한 for문
-				System.out.println();
-				for (int j = 0; j < n; j++) {
-					for (int j2 = 0; j2 < m; j2++) {
-						System.out.print(tempMap[j][j2]+" ");
-					}
-					System.out.println();
-				}
-				//출력확인을 위한 for문
 			}
 			//최솟값
 			min = Math.min(min, minsum(tempMap));
@@ -93,19 +85,16 @@ public class Main_17406_김태훈 {
 	}
 	private static void roate(int r, int c, int s, int[][] array) {
 		// TODO Auto-generated method stub
-		for (int i = 1; i < s; i++) {
-			int startX = r-s-1;
-			int startY = c-s-1;
-			int endX = r+s-1;
-			int endY = c+s-1;
+		for (int i = 0; i < s; i++) {
+			int startX = r-s-1+i;
+			int startY = c-s-1+i;
+			int endX = r+s-1-i;
+			int endY = c+s-1-i;
 			
 			int temp = array[startX][startY];
 			int x = startX;
 			int y = startY;
 			int dir = 0;
-			//==========================
-			System.out.printf("startX : %d startY : %d\n endX : %d endY : %d\n",startX,startY,endX,endY);
-			//=====================
 			//회전
 			while(dir<4) {
 				int nx = x+dx[dir];
