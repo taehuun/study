@@ -105,7 +105,7 @@ public class Solution_5656_김태훈 {
 		}
 	}
 
-	// 맵에 폭탄 터트리고 떨구는 메소드
+	// 맵에 벽돌 떨구는 메소드
 	static void down() {
 		Stack<Integer> stack = new Stack<>();
 		for (int i = 0; i < W; i++) {
@@ -124,7 +124,7 @@ public class Solution_5656_김태훈 {
 		}
 	}
 
-	// 맵에 남아있는 벽돌 깨는 메소드
+	// 맵에 남아있는 벽돌 세는 메소드
 	private static int countmap(int[][] copymap2) {
 		int sum = 0;
 		for (int i = 0; i < H; i++) {
